@@ -1,0 +1,16 @@
+def pairs(s):
+    distance = 0 # sum distance
+    n_ones = 0 # tracks count of ones 
+    sum_index = 0 # sum of indexes 
+    for i in range(len(s)):
+        if s[i] == "1": 
+            distance += i * n_ones - sum_index # sum of distances from current one to previous ones. 
+            n_ones += 1 
+            sum_index += i 
+    return distance
+            
+
+if __name__ == "__main__":
+    print(pairs("100101"))
+    print(pairs("101"))
+    print(pairs("100100111001"))
