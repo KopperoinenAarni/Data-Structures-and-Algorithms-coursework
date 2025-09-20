@@ -1,0 +1,17 @@
+# To make a triangle 2 sides must always be greater than the third side. Also any side must have side lengths > 0. 
+# The function below first checks if any side is smaller or equal to zero then compares if two sides are greater than the third side for all options. 
+
+def triangle(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0:
+        return False
+    elif a + b > c and a + c > b and b + c > a:
+        return True
+    else: 
+        return False
+
+
+if __name__ == "__main__":
+    print(triangle(3, 5, 4))
+    print(triangle(-1, 2, 3))
+    print(triangle(5, 9, 14))
+    print(triangle(30, 12, 29))
