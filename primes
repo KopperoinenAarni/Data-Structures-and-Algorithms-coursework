@@ -1,0 +1,18 @@
+
+# THis function has double for loop which first checks all numbers from 0 to N and then checks if they can be composed by any smaller number (not 1)
+def primes(N):
+    n_primes = 0
+    for i in range(0, N):
+        for j in range(2, i):
+            if i % j == 0:
+                break
+        else:  
+            if i > 1:
+                n_primes += 1   
+    return n_primes
+
+
+if __name__ == "__main__":
+    print(primes(7))
+    print(primes(15))
+    print(primes(50))
