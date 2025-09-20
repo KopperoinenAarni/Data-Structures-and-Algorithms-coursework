@@ -1,0 +1,92 @@
+class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.len = 0
+
+    def append(self, data):
+        new_node = Node(data)        
+        if self.head is None:      
+            self.head = new_node # if there is no head yet, the new node is head and tail
+            self.tail = new_node
+        else:                           
+            self.tail.next = new_node # otherwise set one after tail to be the new node
+            self.tail = new_node
+        self.len += 1
+
+    def insert(self, data, i):
+        if i < 0 or i > self.len: # checks that index is in range 
+            return
+        new_node = Node(data)
+        if i == 0: # if the index is 0, we can add the new node to start
+            new_node.next = self.head
+            self.head = new_node
+            if self.len == 0: # if the index is 0 and the length is 0, our new node is also the tail node
+                self.tail = new_node
+        elif i == self.len:
+            self.tail.next = new_node # if index equals thee length of list, it must be the tail value 
+            self.tail = new_node # update tail 
+        else:
+            prevPos = self.head
+            for n in range(i - 1): # set prevPos to our index - 1, so we can edit next
+                prevPos = prevPos.next 
+            new_node.next = prevPos.next 
+            prevPos.next = new_node
+        self.len += 1 # update length
+
+    
+    def delete(self, i):
+        if i < 0 or i >= self.len:
+            self.len -= 1
+            return None
+        elif i == 0:
+            deleted = self.head
+            self.head = self.head.next # goes to none by default if no next element
+
+            if self.len == 1:   # if we only 1 node in list set tail to none.
+                self.tail = None 
+            self.len -= 1            
+            return deleted.data
+        
+        else:
+            prevPos = self.head 
+
+            for n in range(i - 1):      #same logic as in inserting
+                prevPos = prevPos.next
+            deleted = prevPos.next           # save deleted element before deleting it
+            delElement = prevPos.next       #set elemetn to be deleted to next of prevPos
+            prevPos.next = delElement.next      # update prevPos to the one after that
+
+            if deleted == self.tail:
+                self.tail = prevPos         # if tail element is deleted, set tail to prevPos
+
+        self.len -= 1
+        return deleted.data
+
+
+    def print(self):
+        curPos = self.head
+        while curPos != None: # iterate until no more elements after each other, print everything in between
+            if curPos.next:
+                print(curPos.data, end=" -> ") # if elements after curpos, add arrow, else just the curpos data
+            else:
+                print(curPos.data)
+            curPos = curPos.next
+
+
+if __name__ == "__main__":
+    L = LinkedList()
+    L.append(1)
+    L.append(3)
+    L.append(2)
+    L.print()
+    L.insert(10, 1)
+    L.insert(15, 0)
+    L.print()
+    L.delete(0)
+    L.print()
