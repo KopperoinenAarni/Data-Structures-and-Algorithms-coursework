@@ -1,0 +1,20 @@
+# Creating simple for loop to iterate through list and keeping complexity at theta(n)
+
+# This function first checks how many consecutive same numbers are in a row. 
+# The it adds floor division of that count. Floor because e.g. 5 numbers in a row can be differentiated with 2 changes, same as with 4 in a row. 
+def changes(A):
+    changes = 0
+    n_same_in_a_row = 1 # by default every value is at least once in a row
+    for i in range(len(A) -1):
+        if A[i] == A[i + 1]:
+            n_same_in_a_row += 1
+        else: # This else counts the changes when the row of same numbers ends.
+            changes += n_same_in_a_row // 2 
+            n_same_in_a_row = 1
+    changes += n_same_in_a_row // 2 # This last operation adds the last counted row of same numbers. If there is no, floor division of 1 is 0 so it doesn't mess up the count. 
+    return changes
+
+if __name__ == "__main__":
+    print(changes([1, 1, 2, 2, 2]))
+    print(changes([1, 2, 3, 4, 5]))
+    print(changes([1, 1, 1, 1, 1]))
