@@ -1,0 +1,27 @@
+# This function checks all possible splits and increases count by one iif the max of left side < min of right side 
+def split(T):
+    if len(T) < 2:
+        return 0 # Cannot split array with length < 2
+    
+    right_min = [0] * len(T) #min values on right 
+    right_min[-1] = T[-1]
+    for i in range(len(T) - 2, -1, -1): # already took last value, thus start from -2
+        right_min[i] = T[i] if T[i] < right_min[i + 1] else right_min[i + 1]
+
+    left_max = T[0] # max values on left
+    count_splits = 0
+    for i in range(len(T) -1):
+        left_max = T[i] if T[i] > left_max else left_max 
+        if left_max < right_min[i + 1]: # if left max < right min, +1 possible split
+            count_splits += 1   
+    return count_splits
+
+
+if __name__ == "__main__":
+    print(split([1, 2, 3, 4, 5]))
+    print(split([5, 4, 3, 2, 1]))
+    print(split([2, 1, 2, 5, 7, 6, 9]))
+    print(split([1, 2, 3, 1]))
+    print(split([5, 5, 5, 6]))
+
+# Additional note, very challenging task. Thought I solved it earlier, but got theta(n^2) by accident, after some extra work got here! 
