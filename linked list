@@ -42,20 +42,16 @@ class LinkedList:
     
     def delete(self, i):
         if i < 0 or i >= self.len:
-            self.len -= 1
             return None
         elif i == 0:
             deleted = self.head
             self.head = self.head.next # goes to none by default if no next element
-
             if self.len == 1:   # if we only 1 node in list set tail to none.
                 self.tail = None 
             self.len -= 1            
-            return deleted.data
-        
+            return deleted.data    
         else:
             prevPos = self.head 
-
             for n in range(i - 1):      #same logic as in inserting
                 prevPos = prevPos.next
             deleted = prevPos.next           # save deleted element before deleting it
@@ -64,9 +60,35 @@ class LinkedList:
 
             if deleted == self.tail:
                 self.tail = prevPos         # if tail element is deleted, set tail to prevPos
-
         self.len -= 1
         return deleted.data
+    
+
+    def index(self, value):
+        curPos = self.head
+        index = 0 
+        while curPos != None: # do loop until all values have been checked or corresponding value was found
+            if curPos.data == value:
+                return index
+            curPos = curPos.next
+            index += 1 # update indexes and curpos 
+        return -1 # if nothing was found the return -1 
+
+
+    def swap(self, i, j):
+        if i < 0 or i >= self.len: # check that swap is possible
+            return None
+        if j < 0 or j >= self.len:
+            return None
+        if i == j:
+            return None
+        node1 = self.head
+        for n in range(i): # loop to get both i and j to correct position
+            node1 = node1.next
+        node2 = self.head
+        for n in range(j):
+            node2 = node2.next
+        node1.data, node2.data = node2.data, node1.data # do the swap
 
 
     def print(self):
@@ -89,4 +111,13 @@ if __name__ == "__main__":
     L.insert(15, 0)
     L.print()
     L.delete(0)
+    L.print()
+    print(L.index(7))   
+    print(L.index(9))
+    print(L.index(10))
+    L.swap(1, 4)
+    L.print()
+    L.swap(2, 0)
+    L.print()
+    L.swap(1, 10)
     L.print()
